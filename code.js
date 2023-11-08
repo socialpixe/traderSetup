@@ -16,12 +16,20 @@ function pullData() {
 
     "url": "https://www.nseindia.com/api/option-chain-indices?symbol=BANKNIFTY",
     "method": "GET",
-    crossDomain: true,
   };
 
-  $.ajax(settings).done(function (response) {
-    callNseApi(response);
-  });
+  axios({
+    url: "https://www.nseindia.com/api/option-chain-indices?symbol=BANKNIFTY",
+    method: "GET",
+  })
+    .then(function (response) {
+      callNseApi(response.data);
+    });
+
+
+  // $.ajax(settings).done(function (response) {
+  //   callNseApi(response);
+  // });
 
 }
 
