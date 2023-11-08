@@ -27,9 +27,7 @@ function pullData() {
       'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
       "Access-Control-Expose-Headers": "Content-Type"
     },
-    crossDomain: true,
-    withCredentials: true,
-    credentials: 'same-origin',
+    Origin: "https://socialpixe.github.io",
   })
     .then(function (response) {
       callNseApi(response.data);
