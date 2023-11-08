@@ -21,6 +21,15 @@ function pullData() {
   axios({
     url: "https://www.nseindia.com/api/option-chain-indices?symbol=BANKNIFTY",
     method: "GET",
+    headers: {
+      'Content-Type': 'application/json',
+      "Access-Control-Allow-Origin": "https://socialpixe.github.io",
+      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+      "Access-Control-Expose-Headers": "Content-Type"
+    },
+    crossDomain: true,
+    withCredentials: true,
+    credentials: 'same-origin',
   })
     .then(function (response) {
       callNseApi(response.data);
