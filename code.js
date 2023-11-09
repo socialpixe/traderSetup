@@ -237,8 +237,9 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
       categories: makeFinalDataBuy.strikes
     },
     colors: [
-      '#089981',
-      '#f23645'
+
+      '#f23645',
+      '#089981'
     ],
     credits: {
       enabled: false
