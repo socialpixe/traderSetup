@@ -145,12 +145,14 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
     plotOptions: {
       column: {
         borderRadius: '25%',
-        stacking: 'normal'
+        // stacking: 'normal'
       }
     },
     colors: [
       '#089981',
       '#f23645',
+      '#2caffe',
+      '#6b8abc'
 
     ],
     series: [
@@ -237,7 +239,7 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
       type: 'column'
     },
     title: {
-      text: 'CE Buy Sell Orders'
+      text: 'CE Buy Sell Orders With Volume'
     },
     xAxis: {
       categories: makeFinalDataBuy.strikes
@@ -254,7 +256,7 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
     plotOptions: {
       column: {
         borderRadius: '25%',
-        stacking: 'normal'
+        // stacking: 'normal'
       }
     },
     series: makeFinalDataBuy.series
@@ -265,7 +267,7 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
       type: 'column'
     },
     title: {
-      text: 'PE Buy Sell Orders'
+      text: 'PE Buy Sell Orders  With Volume'
     },
     xAxis: {
       categories: makeFinalDataSell.strikes
@@ -281,7 +283,7 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
     plotOptions: {
       column: {
         borderRadius: '25%',
-        stacking: 'normal'
+        // stacking: 'normal'
       }
     },
     series: makeFinalDataSell.series
@@ -382,19 +384,30 @@ function callNseApi(result) {
       {
         name: 'PE Sell',
         data: peSell,
-        stack: 'AA'
+        // stack: 'AA'
       },
 
       {
         name: 'PE Buy',
         data: peBuy,
-        stack: 'AA'
+        // stack: 'AA'
       },
+      // {
+      //   name: 'PE Volume',
+      //   data: peVol,
+      //   stack: 'BB'
+      // },
       {
-        name: 'PE Volume',
+        type: 'spline',
+        step: 'center',
+        name: 'Volume',
         data: peVol,
-        stack: 'BB'
-      },
+        marker: {
+          lineWidth: 2,
+          lineColor: Highcharts.getOptions().colors[3],
+          fillColor: 'white'
+        }
+      }
 
     ]
   };
@@ -404,20 +417,25 @@ function callNseApi(result) {
     'series': [{
       name: 'CE Sell',
       data: ceSell,
-      stack: 'AA'
     },
 
     {
       name: 'CE Buy',
       data: ceBuy,
-      stack: 'AA'
     },
 
+
     {
-      name: 'CE Volume',
+      type: 'spline',
+      step: 'center',
+      name: 'Volume',
       data: ceVol,
-      stack: 'BB'
-    },
+      marker: {
+        lineWidth: 2,
+        lineColor: Highcharts.getOptions().colors[3],
+        fillColor: 'white'
+      }
+    }
 
     ]
   };
