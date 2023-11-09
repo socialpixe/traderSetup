@@ -27,7 +27,7 @@ function pullData() {
 
 }
 
-function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuySell) {
+function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell) {
   Highcharts.chart('container', {
     chart: {
       type: 'column'
@@ -184,15 +184,15 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
       type: 'column'
     },
     title: {
-      text: 'PE CE Buy & Sell'
+      text: 'PE CE Buy Orders'
     },
     xAxis: {
-      categories: makeFinalDataBuySell.strikes
+      categories: makeFinalDataBuy.strikes
     },
-    // colors: [
-    //   '#089981',
-    //   '#f23645'
-    // ],
+    colors: [
+      '#089981',
+      '#f23645'
+    ],
     credits: {
       enabled: false
     },
@@ -202,7 +202,33 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
         stacking: 'normal'
       }
     },
-    series: makeFinalDataBuySell.series
+    series: makeFinalDataBuy.series
+  });
+
+  Highcharts.chart('container6', {
+    chart: {
+      type: 'column'
+    },
+    title: {
+      text: 'PE CE Sell Orders'
+    },
+    xAxis: {
+      categories: makeFinalDataSell.strikes
+    },
+    colors: [
+      '#089981',
+      '#f23645'
+    ],
+    credits: {
+      enabled: false
+    },
+    plotOptions: {
+      column: {
+        borderRadius: '25%',
+        stacking: 'normal'
+      }
+    },
+    series: makeFinalDataSell.series
   });
 
 
@@ -277,31 +303,38 @@ function callNseApi(result) {
       data: ceOIValues
     }]
   };
-  let makeFinalDataBuySell = {
+  let makeFinalDataSell = {
+    'strikes': strikeValues,
+    'series': [
+      {
+        name: 'PE Sell',
+        data: peSell,
+        stack: 'AA'
+      },
+
+      {
+        name: 'CE Sell',
+        data: ceSell,
+        stack: 'BB'
+      }]
+  };
+
+  let makeFinalDataBuy = {
     'strikes': strikeValues,
     'series': [{
       name: 'PE Buy',
       data: peBuy,
       stack: 'AA'
     },
-    {
-      name: 'PE Sell',
-      data: peSell,
-      stack: 'AA'
-    },
+
     {
       name: 'CE Buy',
       data: ceBuy,
       stack: 'BB'
-    },
-    {
-      name: 'CE Sell',
-      data: ceSell,
-      stack: 'BB'
     }]
   };
 
-  initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuySell);
+  initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell);
   $('#underLye').text(currentUnderlyingValue);
 
 
