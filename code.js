@@ -96,19 +96,10 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
       categories: ['Ratio'],
       crosshair: true,
     },
-    yAxis: {
-      min: 0,
-      title: {
-        text: 'Value'
-      }
-    },
-    tooltip: {
-      valueSuffix: ' '
-    },
+
     plotOptions: {
       column: {
-        pointPadding: 0.2,
-        borderWidth: 0
+        borderRadius: '25%'
       }
     },
     colors: [
@@ -153,8 +144,7 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
     },
     plotOptions: {
       column: {
-        pointPadding: 0.2,
-        borderWidth: 0
+        borderRadius: '25%'
       }
     },
     colors: [
@@ -393,3 +383,5 @@ function callNseApi(result) {
 
 
 }
+
+

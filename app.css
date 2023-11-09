@@ -1,11 +1,15 @@
+body {
+  background-color: #fff;
+}
+
 #container {
   height: 400px;
 }
 
 .highcharts-figure,
 .highcharts-data-table table {
-  /* min-width: 310px;
-  max-width: 800px; */
+  min-width: 100%;
+  max-width: 100%;
   margin: 1em auto;
 }
 
@@ -16,7 +20,7 @@
   margin: 10px auto;
   text-align: center;
   width: 100%;
-  /* max-width: 500px; */
+  max-width: 100%;
 }
 
 .highcharts-data-table caption {
