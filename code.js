@@ -1,5 +1,5 @@
 
-
+$.support.cors = true;
 $(document).ready(function () {
 
   pullData();
@@ -12,11 +12,13 @@ $(document).ready(function () {
 });
 
 function pullData() {
+
+
   var settings = {
 
-    "url": "https://www.nseindia.com/api/option-chain-indices?symbol=BANKNIFTY",
-    "method": "GET",
-    crossDomain: true,
+    url: "https://www.nseindia.com/api/option-chain-indices?symbol=BANKNIFTY",
+    type: "GET",
+
   };
 
   $.ajax(settings).done(function (response) {
@@ -25,7 +27,7 @@ function pullData() {
 
 }
 
-function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe) {
+function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuySell) {
   Highcharts.chart('container', {
     chart: {
       type: 'column'
@@ -45,7 +47,8 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
     },
     plotOptions: {
       column: {
-        borderRadius: '25%'
+        borderRadius: '25%',
+
       }
     },
     series: makeFinalDataOIChange.series
@@ -124,8 +127,6 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
     ]
   });
 
-  // Trending lines
-
   combinedPeCe.sort((a, b) => (a.y < b.y ? 1 : -1));
   let newArrayPeCe = combinedPeCe.slice(0, 5);
   let newStrikeVals = [];
@@ -178,6 +179,33 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
   });
 
 
+  Highcharts.chart('container5', {
+    chart: {
+      type: 'column'
+    },
+    title: {
+      text: 'PE CE Buy & Sell'
+    },
+    xAxis: {
+      categories: makeFinalDataBuySell.strikes
+    },
+    // colors: [
+    //   '#089981',
+    //   '#f23645'
+    // ],
+    credits: {
+      enabled: false
+    },
+    plotOptions: {
+      column: {
+        borderRadius: '25%',
+        stacking: 'normal'
+      }
+    },
+    series: makeFinalDataBuySell.series
+  });
+
+
 }
 
 function callNseApi(result) {
@@ -188,7 +216,7 @@ function callNseApi(result) {
   let updateUnderLyingValue = breakULV + "00";
   let getIndexOfULV = result.records.strikePrices.indexOf(parseInt(updateUnderLyingValue));
   let lastEightStrike = getIndexOfULV - 6;
-  let getNextEightStrike = getIndexOfULV + 6;
+  let getNextEightStrike = getIndexOfULV + 3;
 
 
   let sumTest = '';
@@ -200,6 +228,10 @@ function callNseApi(result) {
   let totalCE = 0;
   let totalPE = 0;
   let combinedPeCe = [];
+  let peBuy = [];
+  let peSell = [];
+  let ceBuy = [];
+  let ceSell = [];
 
   for (let index = lastEightStrike; index <= getNextEightStrike; index++) {
 
@@ -209,6 +241,10 @@ function callNseApi(result) {
     ceOIValues.push(completeData[index].CE.openInterest);
     ceOIChangeValues.push(completeData[index].CE.openInterest);
     combinedPeCe.push({ name: completeData[index].PE.strikePrice + "PE", y: completeData[index].PE.openInterest }, { name: completeData[index].CE.strikePrice + "CE", y: completeData[index].CE.openInterest });
+    peBuy.push(completeData[index].PE.totalBuyQuantity);
+    peSell.push(completeData[index].PE.totalSellQuantity);
+    ceBuy.push(completeData[index].CE.totalBuyQuantity);
+    ceSell.push(completeData[index].CE.totalSellQuantity);
 
     totalPE += completeData[index].PE.openInterest;
     totalCE += completeData[index].CE.openInterest;
@@ -220,12 +256,14 @@ function callNseApi(result) {
   let makeFinalDataOIChange = {
     'strikes': strikeValues,
     'series': [{
-      name: 'PE',
+      name: 'PE OI',
       data: peOIChangeValues
     }, {
-      name: 'CE',
+      name: 'CE OI',
       data: ceOIChangeValues
-    }]
+    }
+
+    ]
 
   };
 
@@ -239,8 +277,31 @@ function callNseApi(result) {
       data: ceOIValues
     }]
   };
+  let makeFinalDataBuySell = {
+    'strikes': strikeValues,
+    'series': [{
+      name: 'PE Buy',
+      data: peBuy,
+      stack: 'AA'
+    },
+    {
+      name: 'PE Sell',
+      data: peSell,
+      stack: 'AA'
+    },
+    {
+      name: 'CE Buy',
+      data: ceBuy,
+      stack: 'BB'
+    },
+    {
+      name: 'CE Sell',
+      data: ceSell,
+      stack: 'BB'
+    }]
+  };
 
-  initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe);
+  initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuySell);
   $('#underLye').text(currentUnderlyingValue);
 
 
