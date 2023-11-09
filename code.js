@@ -27,7 +27,7 @@ function pullData() {
 
 }
 
-function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell) {
+function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell, marketMovers, marketLoosers) {
   Highcharts.chart('container', {
     chart: {
       type: 'column'
@@ -127,36 +127,25 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
     ]
   });
 
-  combinedPeCe.sort((a, b) => (a.y < b.y ? 1 : -1));
-  let newArrayPeCe = combinedPeCe.slice(0, 5);
-  let newStrikeVals = [];
-  let newValues = [];
-  for (let index = 0; index < newArrayPeCe.length; index++) {
-    newStrikeVals.push(newArrayPeCe[index].name);
-    newValues.push(newArrayPeCe[index].y);
-
-  }
-
   Highcharts.chart('container4', {
     chart: {
       type: 'column'
     },
     title: {
-      text: 'Trending Strikes',
+      text: 'Total PE & CE Sell Buy',
+
     },
     credits: {
       enabled: false
     },
     xAxis: {
-      categories: newStrikeVals,
-      accessibility: {
-        description: 'OI'
-      }
+      categories: ['Ratio'],
+      crosshair: true,
     },
     yAxis: {
       min: 0,
       title: {
-        text: 'Values'
+        text: 'Value'
       }
     },
     tooltip: {
@@ -168,15 +157,73 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
         borderWidth: 0
       }
     },
+    colors: [
+      '#089981',
+      '#f23645',
+
+    ],
     series: [
       {
-        name: 'OI',
-        colorByPoint: true,
-        data: newValues
+        name: 'CE Buyer & PE Sellers',
+        data: [marketMovers]
       },
-
+      {
+        name: 'CE Sellers & PE Buyers',
+        data: [marketLoosers]
+      }
     ]
   });
+
+  // combinedPeCe.sort((a, b) => (a.y < b.y ? 1 : -1));
+  // let newArrayPeCe = combinedPeCe.slice(0, 5);
+  // let newStrikeVals = [];
+  // let newValues = [];
+  // for (let index = 0; index < newArrayPeCe.length; index++) {
+  //   newStrikeVals.push(newArrayPeCe[index].name);
+  //   newValues.push(newArrayPeCe[index].y);
+
+  // }
+
+  // Highcharts.chart('container4', {
+  //   chart: {
+  //     type: 'column'
+  //   },
+  //   title: {
+  //     text: 'Trending Strikes',
+  //   },
+  //   credits: {
+  //     enabled: false
+  //   },
+  //   xAxis: {
+  //     categories: newStrikeVals,
+  //     accessibility: {
+  //       description: 'OI'
+  //     }
+  //   },
+  //   yAxis: {
+  //     min: 0,
+  //     title: {
+  //       text: 'Values'
+  //     }
+  //   },
+  //   tooltip: {
+  //     valueSuffix: ' '
+  //   },
+  //   plotOptions: {
+  //     column: {
+  //       pointPadding: 0.2,
+  //       borderWidth: 0
+  //     }
+  //   },
+  //   series: [
+  //     {
+  //       name: 'OI',
+  //       colorByPoint: true,
+  //       data: newValues
+  //     },
+
+  //   ]
+  // });
 
 
   Highcharts.chart('container5', {
@@ -258,6 +305,8 @@ function callNseApi(result) {
   let peSell = [];
   let ceBuy = [];
   let ceSell = [];
+  let marketMovers = 0;
+  let marketLoosers = 0;
 
   for (let index = lastEightStrike; index <= getNextEightStrike; index++) {
 
@@ -271,6 +320,10 @@ function callNseApi(result) {
     peSell.push(completeData[index].PE.totalSellQuantity);
     ceBuy.push(completeData[index].CE.totalBuyQuantity);
     ceSell.push(completeData[index].CE.totalSellQuantity);
+
+    marketMovers += (parseInt(completeData[index].PE.totalSellQuantity) + parseInt(completeData[index].CE.totalBuyQuantity))
+
+    marketLoosers += (parseInt(completeData[index].PE.totalBuyQuantity) + parseInt(completeData[index].CE.totalSellQuantity))
 
     totalPE += completeData[index].PE.openInterest;
     totalCE += completeData[index].CE.openInterest;
@@ -334,7 +387,7 @@ function callNseApi(result) {
     }]
   };
 
-  initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell);
+  initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell, marketMovers, marketLoosers);
   $('#underLye').text(currentUnderlyingValue);
 
 
