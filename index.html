@@ -15,20 +15,23 @@
     <div class="container-fluid">
       <a class="navbar-brand" href="#"><label id="selectedScrip"></label> (<b id="underLye"></b>)</a>
 
+
+
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me*-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link _support" href="javascript:void(0)">Current Support <br> <b id="_supportValue">-</b></a>
+          </li>
 
+          <li class="nav-item">
+            <a class="nav-link _action" href="javascript:void(0)">Action <br> <b id="_actionValue" class=" ">BUY</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link _resistance" href="javascript:void(0)">Current Resistance<br><b
+                id="_resistanceValue">-</b></a>
+          </li>
         </ul>
-        <form class="d-flex" role="search">
-          <select class="form-select me-2" id="scripChanger" onchange="onChangeScrip(this.value)">
-            <option value="MIDCPNIFTY">MIDCPNIFTY</option>
-            <option value="NIFTY">NIFTY</option>
-            <option value="FINNIFTY">FINNIFTY</option>
-            <option value="BANKNIFTY">BANKNIFTY</option>
-          </select>
 
-          <button class="btn btn-outline-success" type="button">Search</button>
-        </form>
       </div>
     </div>
   </nav>

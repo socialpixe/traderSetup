@@ -312,8 +312,6 @@ function callNseApi(result) {
   let lastEightStrike = getIndexOfULV - 4;
   let getNextEightStrike = getIndexOfULV + 4;
 
-  console.log(lastEightStrike, getNextEightStrike);
-
 
   let sumTest = '';
   let peOIValues = [];
@@ -456,8 +454,38 @@ function callNseApi(result) {
   };
 
   initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell, marketMovers, marketLoosers, totalCeVol, totalPeVol);
+  findSupportAndResistance(peOIValues, ceOIValues, strikeValues, currentUnderlyingValue);
   $('#underLye').text(currentUnderlyingValue);
 
+
+}
+
+
+function findSupportAndResistance(peOIChangeValues, ceOIChangeValues, strikeValues, currentUnderlyingValue) {
+
+
+  let getPeMax = Math.max(...peOIChangeValues);
+  let getCeMax = Math.max(...ceOIChangeValues);
+
+  let getPeIndex = peOIChangeValues.indexOf(getPeMax);
+  let getCeIndex = ceOIChangeValues.indexOf(getCeMax);
+
+  let checkActionForSupport = parseInt(currentUnderlyingValue) - parseInt(strikeValues[getPeIndex]);
+  let checkActionForResistance = parseInt(strikeValues[getCeIndex]) - parseInt(currentUnderlyingValue);
+
+  if (checkActionForSupport > checkActionForResistance) {
+    $('#_actionValue').text('SELL');
+    $('#_actionValue').addClass('_sell');
+  }
+
+  if (checkActionForSupport < checkActionForResistance) {
+    $('#_actionValue').text('BUY');
+    $('#_actionValue').addClass('_buy');
+  }
+
+
+  $('#_supportValue').text(strikeValues[getPeIndex]);
+  $('#_resistanceValue').text(strikeValues[getCeIndex]);
 
 }
 
