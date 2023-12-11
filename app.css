@@ -48,3 +48,37 @@ body {
 .highcharts-data-table tr:hover {
   background: #f1f7ff;
 }
+
+.collapse {
+  flex-direction: column !important;
+}
+
+
+.collapse ul {
+  width: 60%;
+}
+
+.collapse li {
+  width: 100%;
+  pointer-events: none;
+}
+
+._support {
+  color: #089981;
+}
+
+._resistance {
+  color: #f23645;
+}
+
+._action {
+  color: #0b5394
+}
+
+._action ._sell {
+  color: #f23645 !important
+}
+
+._action ._buy {
+  color: #089981 !important
+}
