@@ -2,7 +2,7 @@
 $.support.cors = true;
 $(document).ready(function () {
 
-  var selectedScrip = localStorage.getItem("selectedScrip");
+  var selectedScrip = 'BANKNIFTY';
   pullData(selectedScrip);
   $('#selectedScrip').text(selectedScrip);
   $('#scripChanger option[value="' + selectedScrip + '"]').attr("selected", "selected");
