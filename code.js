@@ -2,7 +2,10 @@
 $.support.cors = true;
 $(document).ready(function () {
 
-  pullData();
+  var selectedScrip = localStorage.getItem("selectedScrip");
+  pullData(selectedScrip);
+  $('#selectedScrip').text(selectedScrip);
+  $('#scripChanger option[value="' + selectedScrip + '"]').attr("selected", "selected");
   let timerVal = new Date().toLocaleString();
   $('#timer').text(timerVal);
   setInterval(() => {
@@ -11,12 +14,18 @@ $(document).ready(function () {
 
 });
 
-function pullData() {
+function onChangeScrip(value) {
+  //selectedScrip
+  localStorage.setItem("selectedScrip", value);
+  window.location.reload(1);
+}
+
+function pullData(selectedScrip) {
 
 
   var settings = {
-
-    url: "https://www.nseindia.com/api/option-chain-indices?symbol=BANKNIFTY",
+    //MIDCPNIFTY, NIFTY, FINNIFTY
+    url: "https://www.nseindia.com/api/option-chain-indices?symbol=" + selectedScrip,
     type: "GET",
 
   };
@@ -298,9 +307,12 @@ function callNseApi(result) {
   let currentUnderlyingValue = result.records.underlyingValue + " ";
   let breakULV = currentUnderlyingValue.substr(0, 3);
   let updateUnderLyingValue = breakULV + "00";
-  let getIndexOfULV = result.records.strikePrices.indexOf(parseInt(updateUnderLyingValue));
-  let lastEightStrike = getIndexOfULV - 6;
-  let getNextEightStrike = getIndexOfULV + 3;
+  let allStrikes = result.records.strikePrices;
+  let getIndexOfULV = completeData.map(function (o) { return o.strikePrice; }).indexOf(parseInt(updateUnderLyingValue));
+  let lastEightStrike = getIndexOfULV - 4;
+  let getNextEightStrike = getIndexOfULV + 4;
+
+  console.log(lastEightStrike, getNextEightStrike);
 
 
   let sumTest = '';
@@ -348,6 +360,9 @@ function callNseApi(result) {
 
     totalPE += completeData[index].PE.openInterest;
     totalCE += completeData[index].CE.openInterest;
+
+
+
 
 
 
