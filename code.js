@@ -4,6 +4,7 @@ $(document).ready(function () {
 
   var selectedScrip = 'BANKNIFTY';
   pullData(selectedScrip);
+  pullFearAndGreed();
   $('#selectedScrip').text(selectedScrip);
   $('#scripChanger option[value="' + selectedScrip + '"]').attr("selected", "selected");
   let timerVal = new Date().toLocaleString();
@@ -32,6 +33,22 @@ function pullData(selectedScrip) {
 
   $.ajax(settings).done(function (response) {
     callNseApi(response);
+  });
+
+}
+
+function pullFearAndGreed() {
+
+
+  var settings = {
+    //MIDCPNIFTY, NIFTY, FINNIFTY
+    url: "https://api.tickertape.in/mmi/now",
+    type: "GET",
+
+  };
+
+  $.ajax(settings).done(function (response) {
+    updateFearGreed(response);
   });
 
 }
@@ -470,18 +487,18 @@ function findSupportAndResistance(peOIChangeValues, ceOIChangeValues, strikeValu
   let getPeIndex = peOIChangeValues.indexOf(getPeMax);
   let getCeIndex = ceOIChangeValues.indexOf(getCeMax);
 
-  let checkActionForSupport = parseInt(currentUnderlyingValue) - parseInt(strikeValues[getPeIndex]);
-  let checkActionForResistance = parseInt(strikeValues[getCeIndex]) - parseInt(currentUnderlyingValue);
+  // let checkActionForSupport = parseInt(currentUnderlyingValue) - parseInt(strikeValues[getPeIndex]);
+  // let checkActionForResistance = parseInt(strikeValues[getCeIndex]) - parseInt(currentUnderlyingValue);
 
-  if (checkActionForSupport > checkActionForResistance) {
-    $('#_actionValue').text('SELL');
-    $('#_actionValue').addClass('_sell');
-  }
+  // if (checkActionForSupport > checkActionForResistance) {
+  //   $('#_actionValue').text('SELL');
+  //   $('#_actionValue').addClass('_sell');
+  // }
 
-  if (checkActionForSupport < checkActionForResistance) {
-    $('#_actionValue').text('BUY');
-    $('#_actionValue').addClass('_buy');
-  }
+  // if (checkActionForSupport < checkActionForResistance) {
+  //   $('#_actionValue').text('BUY');
+  //   $('#_actionValue').addClass('_buy');
+  // }
 
 
   $('#_supportValue').text(strikeValues[getPeIndex]);
@@ -489,4 +506,29 @@ function findSupportAndResistance(peOIChangeValues, ceOIChangeValues, strikeValu
 
 }
 
+//_feerAndGreedValue   
 
+function updateFearGreed(response) {
+  $('#_feerAndGreedValue').text(parseInt(response.data.currentValue));
+
+  if (response.data.currentValue >= 0 && response.data.currentValue < 30) {
+    $('#_actionValue').text('BUY');
+    $('#_actionValue').addClass('_buy');
+  }
+
+  if (response.data.currentValue >= 30 && response.data.currentValue < 50) {
+    $('#_actionValue').text('BUY');
+    $('#_actionValue').addClass('_buy');
+  }
+
+  if (response.data.currentValue >= 50 && response.data.currentValue < 70) {
+    $('#_actionValue').text('Wait To Sell');
+    $('#_actionValue').addClass('_sell');
+  }
+
+  if (response.data.currentValue >= 70) {
+    $('#_actionValue').text('SELL');
+    $('#_actionValue').addClass('_sell');
+  }
+
+}
