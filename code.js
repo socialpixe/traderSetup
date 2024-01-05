@@ -504,6 +504,48 @@ function findSupportAndResistance(peOIChangeValues, ceOIChangeValues, strikeValu
   $('#_supportValue').text(strikeValues[getPeIndex]);
   $('#_resistanceValue').text(strikeValues[getCeIndex]);
 
+  saveDataToLocalStorage(strikeValues[getPeIndex], strikeValues[getCeIndex]);
+
+
+
+}
+
+function saveDataToLocalStorage(support, resistance) {
+
+  if (localStorage.getItem("testObject") !== null) {
+
+    var retrievedObject = localStorage.getItem('testObject');
+    let parseObj = JSON.parse(retrievedObject);
+
+    parseObj.push({ 'Support': support, 'Resistance': resistance });
+
+    localStorage.setItem('testObject', JSON.stringify(parseObj));
+
+    var retrievedObject = localStorage.getItem('testObject');
+
+    console.log('retrievedObject: ', JSON.parse(retrievedObject));
+
+  }
+  else {
+
+    let newObj = [];
+
+    let createData = { 'Support': support, 'Resistance': resistance };
+
+    newObj.push(createData);
+
+    localStorage.setItem('testObject', JSON.stringify(newObj));
+
+    var retrievedObject = localStorage.getItem('testObject');
+
+    console.log('retrievedObject: ', JSON.parse(retrievedObject));
+
+
+  }
+
+
+
+
 }
 
 //_feerAndGreedValue   
