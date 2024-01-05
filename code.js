@@ -512,12 +512,14 @@ function findSupportAndResistance(peOIChangeValues, ceOIChangeValues, strikeValu
 
 function saveDataToLocalStorage(support, resistance) {
 
+  let timerVal = new Date().toLocaleString();
+
   if (localStorage.getItem("testObject") !== null) {
 
     var retrievedObject = localStorage.getItem('testObject');
     let parseObj = JSON.parse(retrievedObject);
 
-    parseObj.push({ 'Support': support, 'Resistance': resistance });
+    parseObj.push({ 'DataOf': timerVal, 'Support': support, 'Resistance': resistance });
 
     localStorage.setItem('testObject', JSON.stringify(parseObj));
 
@@ -530,7 +532,7 @@ function saveDataToLocalStorage(support, resistance) {
 
     let newObj = [];
 
-    let createData = { 'Support': support, 'Resistance': resistance };
+    let createData = { 'DataOf': timerVal, 'Support': support, 'Resistance': resistance };
 
     newObj.push(createData);
 
