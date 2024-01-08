@@ -533,7 +533,7 @@ function saveDataToLocalStorage(support, resistance) {
     var retrievedObject = localStorage.getItem('testObject');
     let parseObj = JSON.parse(retrievedObject);
 
-    parseObj.push({ 'Scrip': selectedScrip, 'DataOf': timerVal, 'Support': support, 'Resistance': resistance });
+    parseObj.push({ 'Scrip': localStorage.getItem("selectedScrip"), 'DataOf': timerVal, 'Support': support, 'Resistance': resistance });
 
     localStorage.setItem('testObject', JSON.stringify(parseObj));
 
@@ -546,7 +546,7 @@ function saveDataToLocalStorage(support, resistance) {
 
     let newObj = [];
 
-    let createData = { 'Scrip': selectedScrip, 'DataOf': timerVal, 'Support': support, 'Resistance': resistance };
+    let createData = { 'Scrip': localStorage.getItem("selectedScrip"), 'DataOf': timerVal, 'Support': support, 'Resistance': resistance };
 
     newObj.push(createData);
 
