@@ -590,3 +590,20 @@ function updateFearGreed(response) {
   }
 
 }
+
+function showTodaysSupportResistance() {
+
+  var retrievedObject = localStorage.getItem('testObject');
+  let parseObj = JSON.parse(retrievedObject);
+  let tablebody = '';
+  for (let index = 0; index < parseObj.length; index++) {
+
+    ////modalBody
+    tablebody += '<td>' + parseObj[index]['Scrip'] + '</td><td>' + parseObj[index]['DataOf'] + '</td><td>' + parseObj[index]['Support'] + '</td><td>' + parseObj[index]['Resistance'] + '</td>';
+
+
+  }
+
+  $('#modalBody').html(tablebody);
+
+}
