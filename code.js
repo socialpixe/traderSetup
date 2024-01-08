@@ -599,7 +599,7 @@ function showTodaysSupportResistance() {
   for (let index = 0; index < parseObj.length; index++) {
 
     ////modalBody
-    tablebody += '<td>' + parseObj[index]['Scrip'] + '</td><td>' + parseObj[index]['DataOf'] + '</td><td>' + parseObj[index]['Support'] + '</td><td>' + parseObj[index]['Resistance'] + '</td>';
+    tablebody += '<tr>' + '<td>' + parseObj[index]['Scrip'] + '</td><td>' + parseObj[index]['DataOf'] + '</td><td>' + parseObj[index]['Support'] + '</td><td>' + parseObj[index]['Resistance'] + '</td>' + '</tr>';
 
 
   }
