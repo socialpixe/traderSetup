@@ -50,7 +50,7 @@ body {
 }
 
 .collapse {
-  flex-direction: column !important;
+  /* flex-direction: column !important; */
 }
 
 
