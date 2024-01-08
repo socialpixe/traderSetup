@@ -2,7 +2,8 @@
 $.support.cors = true;
 $(document).ready(function () {
 
-  var selectedScrip = 'BANKNIFTY';
+  // var selectedScrip = 'BANKNIFTY';
+  var selectedScrip = localStorage.getItem("selectedScrip");
   pullData(selectedScrip);
   pullFearAndGreed();
   $('#selectedScrip').text(selectedScrip);
@@ -13,7 +14,11 @@ $(document).ready(function () {
     window.location.reload(1);
   }, 300000);
 
+
+
 });
+
+
 
 function onChangeScrip(value) {
   //selectedScrip
@@ -25,7 +30,7 @@ function pullData(selectedScrip) {
 
 
   var settings = {
-    //MIDCPNIFTY, NIFTY, FINNIFTY
+    //MIDCPNIFTY - 10000, NIFTY - 20000, FINNIFTY - 40000
     url: "https://www.nseindia.com/api/option-chain-indices?symbol=" + selectedScrip,
     type: "GET",
 
@@ -322,7 +327,16 @@ function callNseApi(result) {
 
   let completeData = result.filtered.data;
   let currentUnderlyingValue = result.records.underlyingValue + " ";
-  let breakULV = currentUnderlyingValue.substr(0, 3);
+  let breakULV;
+
+  if (currentUnderlyingValue.length >= 5) {
+    breakULV = currentUnderlyingValue.substr(0, 3);
+  }
+  else {
+    breakULV = currentUnderlyingValue.substr(0, 2);
+  }
+
+  // let breakULV = currentUnderlyingValue.substr(0, 3);
   let updateUnderLyingValue = breakULV + "00";
   let allStrikes = result.records.strikePrices;
   let getIndexOfULV = completeData.map(function (o) { return o.strikePrice; }).indexOf(parseInt(updateUnderLyingValue));
