@@ -135,16 +135,29 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
     },
     colors: [
       '#089981',
-      '#f23645'
+      '#f23645',
+      '#2caffe',
+      '#6b8abc'
     ],
     series: [
       {
-        name: 'PE',
+        name: 'PE OI',
         data: [totalPE]
       },
       {
-        name: 'CE',
+        name: 'CE OI',
         data: [totalCE]
+      },
+      {
+        name: 'CE Volume',
+        data: [totalCeVol],
+        stack: "BB"
+
+      },
+      {
+        name: 'PE Volume',
+        data: [totalPeVol],
+        stack: "BB"
       }
     ]
   });
@@ -199,17 +212,19 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
         stack: "AA"
       }//totalCeVol,totalPeVol
       ,
-      {
-        name: 'CE Volume',
-        data: [totalCeVol],
-        stack: "BB"
+      // {
+      //   name: 'CE Volume',
+      //   data: [totalCeVol],
+      //   stack: "BB"
 
-      },
-      {
-        name: 'PE Volume',
-        data: [totalPeVol],
-        stack: "BB"
-      }//totalCeVol,totalPeVol
+      // },
+      // {
+      //   name: 'PE Volume',
+      //   data: [totalPeVol],
+      //   stack: "BB"
+      // }
+
+      //totalCeVol,totalPeVol
     ]
   });
 
@@ -340,8 +355,20 @@ function callNseApi(result) {
   let updateUnderLyingValue = breakULV + "00";
   let allStrikes = result.records.strikePrices;
   let getIndexOfULV = completeData.map(function (o) { return o.strikePrice; }).indexOf(parseInt(updateUnderLyingValue));
-  let lastEightStrike = getIndexOfULV - 4;
-  let getNextEightStrike = getIndexOfULV + 4;
+  let lastEightStrike = 0;
+  let getNextEightStrike = 0;
+
+  if (localStorage.getItem("selectedScrip") != 'BANKNIFTY') {
+    lastEightStrike = getIndexOfULV - 8;
+    getNextEightStrike = getIndexOfULV + 8;
+
+  }
+  else {
+    lastEightStrike = getIndexOfULV - 4;
+    getNextEightStrike = getIndexOfULV + 4;
+
+  }
+
 
 
   let sumTest = '';
