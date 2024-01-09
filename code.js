@@ -58,7 +58,7 @@ function pullFearAndGreed() {
 
 }
 
-function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell, marketMovers, marketLoosers, totalCeVol, totalPeVol) {
+function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell, marketMovers, marketLoosers, totalCeVol, totalPeVol, makeVolumesGraph) {
   Highcharts.chart('container', {
     chart: {
       type: 'column'
@@ -110,57 +110,85 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
     series: makeFinalDataOI.series
   });
 
-  //PE CE
-
-  Highcharts.chart('container3', {
+  Highcharts.chart('container2', {
     chart: {
-      type: 'column'
+      type: 'line'
     },
     title: {
-      text: 'Calls vs Puts',
-
+      text: 'Volumes'
+    },
+    colors: [
+      '#089981',
+      '#f23645'
+    ],
+    xAxis: {
+      categories: makeVolumesGraph.strikes
     },
     credits: {
       enabled: false
     },
-    xAxis: {
-      categories: ['Ratio'],
-      crosshair: true,
-    },
-
     plotOptions: {
-      column: {
-        borderRadius: '25%'
+      line: {
+        dataLabels: {
+          enabled: true
+        },
+        enableMouseTracking: true
       }
     },
-    colors: [
-      '#089981',
-      '#f23645',
-      '#2caffe',
-      '#6b8abc'
-    ],
-    series: [
-      {
-        name: 'PE OI',
-        data: [totalPE]
-      },
-      {
-        name: 'CE OI',
-        data: [totalCE]
-      },
-      {
-        name: 'CE Volume',
-        data: [totalCeVol],
-        stack: "BB"
-
-      },
-      {
-        name: 'PE Volume',
-        data: [totalPeVol],
-        stack: "BB"
-      }
-    ]
+    series: makeVolumesGraph.series
   });
+
+  //PE CE
+
+  // Highcharts.chart('container3', {
+  //   chart: {
+  //     type: 'column'
+  //   },
+  //   title: {
+  //     text: 'Calls vs Puts',
+
+  //   },
+  //   credits: {
+  //     enabled: false
+  //   },
+  //   xAxis: {
+  //     categories: ['Ratio'],
+  //     crosshair: true,
+  //   },
+
+  //   plotOptions: {
+  //     column: {
+  //       borderRadius: '25%'
+  //     }
+  //   },
+  //   colors: [
+  //     '#089981',
+  //     '#f23645',
+  //     '#2caffe',
+  //     '#6b8abc'
+  //   ],
+  //   series: [
+  //     {
+  //       name: 'PE OI',
+  //       data: [totalPE]
+  //     },
+  //     {
+  //       name: 'CE OI',
+  //       data: [totalCE]
+  //     },
+  //     {
+  //       name: 'CE Volume',
+  //       data: [totalCeVol],
+  //       stack: "BB"
+
+  //     },
+  //     {
+  //       name: 'PE Volume',
+  //       data: [totalPeVol],
+  //       stack: "BB"
+  //     }
+  //   ]
+  // });
 
   Highcharts.chart('container4', {
     chart: {
@@ -192,13 +220,13 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
         // stacking: 'normal'
       }
     },
-    colors: [
-      '#089981',
-      '#f23645',
-      '#2caffe',
-      '#6b8abc'
+    // colors: [
+    //   '#089981',
+    //   '#f23645',
+    //   '#2caffe',
+    //   '#6b8abc'
 
-    ],
+    // ],
     series: [
       {
         name: 'CE Buyer & PE Sellers',
@@ -210,7 +238,27 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
         name: 'CE Sellers & PE Buyers',
         data: [marketLoosers],
         stack: "AA"
-      }//totalCeVol,totalPeVol
+      },
+      {
+        name: 'PE OI',
+        data: [totalPE]
+      },
+      {
+        name: 'CE OI',
+        data: [totalCE]
+      },
+      {
+        name: 'CE Volume',
+        data: [totalCeVol],
+        stack: "BB"
+
+      },
+      {
+        name: 'PE Volume',
+        data: [totalPeVol],
+        stack: "BB"
+      }
+      //totalCeVol,totalPeVol
       ,
       // {
       //   name: 'CE Volume',
@@ -285,7 +333,7 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
       type: 'column'
     },
     title: {
-      text: 'CE Buy Sell Orders With Volume'
+      text: 'CE Buy Sell Orders'
     },
     xAxis: {
       categories: makeFinalDataBuy.strikes
@@ -313,7 +361,7 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
       type: 'column'
     },
     title: {
-      text: 'PE Buy Sell Orders  With Volume'
+      text: 'PE Buy Sell Orders'
     },
     xAxis: {
       categories: makeFinalDataSell.strikes
@@ -468,17 +516,17 @@ function callNseApi(result) {
       //   data: peVol,
       //   stack: 'BB'
       // },
-      {
-        type: 'spline',
-        step: 'center',
-        name: 'Volume',
-        data: peVol,
-        marker: {
-          lineWidth: 2,
-          lineColor: Highcharts.getOptions().colors[3],
-          fillColor: 'white'
-        }
-      }
+      // {
+      //   type: 'spline',
+      //   step: 'center',
+      //   name: 'Volume',
+      //   data: peVol,
+      //   marker: {
+      //     lineWidth: 2,
+      //     lineColor: Highcharts.getOptions().colors[3],
+      //     fillColor: 'white'
+      //   }
+      // }
 
     ]
   };
@@ -496,22 +544,35 @@ function callNseApi(result) {
     },
 
 
-    {
-      type: 'spline',
-      step: 'center',
-      name: 'Volume',
-      data: ceVol,
-      marker: {
-        lineWidth: 2,
-        lineColor: Highcharts.getOptions().colors[3],
-        fillColor: 'white'
-      }
+      // {
+      //   type: 'spline',
+      //   step: 'center',
+      //   name: 'Volume',
+      //   data: ceVol,
+      //   marker: {
+      //     lineWidth: 2,
+      //     lineColor: Highcharts.getOptions().colors[3],
+      //     fillColor: 'white'
+      //   }
+      // }
+
+    ]
+  };
+
+  let makeVolumesGraph = {
+    'strikes': strikeValues,
+    'series': [{
+      name: 'PE Volume',
+      data: peVol
+    }, {
+      name: 'CE Volume',
+      data: ceVol
     }
 
     ]
   };
 
-  initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell, marketMovers, marketLoosers, totalCeVol, totalPeVol);
+  initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell, marketMovers, marketLoosers, totalCeVol, totalPeVol, makeVolumesGraph);
   findSupportAndResistance(peOIValues, ceOIValues, strikeValues, currentUnderlyingValue);
   $('#underLye').text(currentUnderlyingValue);
 
