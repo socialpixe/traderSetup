@@ -407,13 +407,13 @@ function callNseApi(result) {
   let getNextEightStrike = 0;
 
   if (localStorage.getItem("selectedScrip") != 'BANKNIFTY') {
-    lastEightStrike = getIndexOfULV - 6;
-    getNextEightStrike = getIndexOfULV + 6;
+    lastEightStrike = getIndexOfULV - 10;
+    getNextEightStrike = getIndexOfULV + 10;
 
   }
   else {
-    lastEightStrike = getIndexOfULV - 4;
-    getNextEightStrike = getIndexOfULV + 4;
+    lastEightStrike = getIndexOfULV - 8;
+    getNextEightStrike = getIndexOfULV + 8;
 
   }
 
