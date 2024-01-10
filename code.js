@@ -355,6 +355,10 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
     tooltip: {
       valueSuffix: ' '
     },
+    colors: [
+      '#089981',
+      '#f23645'
+    ],
     plotOptions: {
       column: {
         borderRadius: '25%'
