@@ -627,7 +627,7 @@ function callNseApi(result) {
   };
 
   initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell, marketMovers, marketLoosers, totalCeVol, totalPeVol, makeVolumesGraph, makeFinalDataOIAndvolsum);
-  findSupportAndResistance(peOIValues, ceOIValues, strikeValues, currentUnderlyingValue);
+  findSupportAndResistance(totalPeVolPeOi, totalCeVolCeOi, strikeValues, currentUnderlyingValue);
   $('#underLye').text(currentUnderlyingValue);
 
 
