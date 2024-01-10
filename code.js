@@ -112,7 +112,7 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
 
   Highcharts.chart('container2', {
     chart: {
-      type: 'line'
+      type: 'column'
     },
     title: {
       text: 'Volumes'
@@ -128,12 +128,15 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
       enabled: false
     },
     plotOptions: {
-      line: {
-        dataLabels: {
-          enabled: true
-        },
-        enableMouseTracking: true
+      column: {
+        borderRadius: '25%'
       }
+      // line: {
+      //   dataLabels: {
+      //     enabled: true
+      //   },
+      //   enableMouseTracking: true
+      // }
     },
     series: makeVolumesGraph.series
   });
