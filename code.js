@@ -190,91 +190,91 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
   //   ]
   // });
 
-  Highcharts.chart('container4', {
-    chart: {
-      type: 'column'
-    },
-    title: {
-      text: 'Total PE & CE Sell Buy',
+  // Highcharts.chart('container4', {
+  //   chart: {
+  //     type: 'column'
+  //   },
+  //   title: {
+  //     text: 'Total PE & CE Sell Buy',
 
-    },
-    credits: {
-      enabled: false
-    },
-    xAxis: {
-      categories: ['Ratio'],
-      crosshair: true,
-    },
-    yAxis: {
-      min: 0,
-      title: {
-        text: 'Value'
-      }
-    },
-    tooltip: {
-      valueSuffix: ' '
-    },
-    plotOptions: {
-      column: {
-        borderRadius: '25%',
-        // stacking: 'normal'
-      }
-    },
-    // colors: [
-    //   '#089981',
-    //   '#f23645',
-    //   '#2caffe',
-    //   '#6b8abc'
+  //   },
+  //   credits: {
+  //     enabled: false
+  //   },
+  //   xAxis: {
+  //     categories: ['Ratio'],
+  //     crosshair: true,
+  //   },
+  //   yAxis: {
+  //     min: 0,
+  //     title: {
+  //       text: 'Value'
+  //     }
+  //   },
+  //   tooltip: {
+  //     valueSuffix: ' '
+  //   },
+  //   plotOptions: {
+  //     column: {
+  //       borderRadius: '25%',
+  //       // stacking: 'normal'
+  //     }
+  //   },
+  //   // colors: [
+  //   //   '#089981',
+  //   //   '#f23645',
+  //   //   '#2caffe',
+  //   //   '#6b8abc'
 
-    // ],
-    series: [
-      {
-        name: 'CE Buyer & PE Sellers',
-        data: [marketMovers],
-        stack: "AA"
+  //   // ],
+  //   series: [
+  //     {
+  //       name: 'CE Buyer & PE Sellers',
+  //       data: [marketMovers],
+  //       stack: "AA"
 
-      },
-      {
-        name: 'CE Sellers & PE Buyers',
-        data: [marketLoosers],
-        stack: "AA"
-      },
-      {
-        name: 'PE OI',
-        data: [totalPE]
-      },
-      {
-        name: 'CE OI',
-        data: [totalCE]
-      },
-      {
-        name: 'CE Volume',
-        data: [totalCeVol],
-        stack: "BB"
+  //     },
+  //     {
+  //       name: 'CE Sellers & PE Buyers',
+  //       data: [marketLoosers],
+  //       stack: "AA"
+  //     },
+  //     {
+  //       name: 'PE OI',
+  //       data: [totalPE]
+  //     },
+  //     {
+  //       name: 'CE OI',
+  //       data: [totalCE]
+  //     },
+  //     {
+  //       name: 'CE Volume',
+  //       data: [totalCeVol],
+  //       stack: "BB"
 
-      },
-      {
-        name: 'PE Volume',
-        data: [totalPeVol],
-        stack: "BB"
-      }
-      //totalCeVol,totalPeVol
-      ,
-      // {
-      //   name: 'CE Volume',
-      //   data: [totalCeVol],
-      //   stack: "BB"
+  //     },
+  //     {
+  //       name: 'PE Volume',
+  //       data: [totalPeVol],
+  //       stack: "BB"
+  //     }
+  //     //totalCeVol,totalPeVol
+  //     ,
+  //     // {
+  //     //   name: 'CE Volume',
+  //     //   data: [totalCeVol],
+  //     //   stack: "BB"
 
-      // },
-      // {
-      //   name: 'PE Volume',
-      //   data: [totalPeVol],
-      //   stack: "BB"
-      // }
+  //     // },
+  //     // {
+  //     //   name: 'PE Volume',
+  //     //   data: [totalPeVol],
+  //     //   stack: "BB"
+  //     // }
 
-      //totalCeVol,totalPeVol
-    ]
-  });
+  //     //totalCeVol,totalPeVol
+  //   ]
+  // });
 
   // combinedPeCe.sort((a, b) => (a.y < b.y ? 1 : -1));
   // let newArrayPeCe = combinedPeCe.slice(0, 5);
@@ -328,60 +328,60 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
   // });
 
 
-  Highcharts.chart('container5', {
-    chart: {
-      type: 'column'
-    },
-    title: {
-      text: 'CE Buy Sell Orders'
-    },
-    xAxis: {
-      categories: makeFinalDataBuy.strikes
-    },
-    colors: [
+  // Highcharts.chart('container5', {
+  //   chart: {
+  //     type: 'column'
+  //   },
+  //   title: {
+  //     text: 'CE Buy Sell Orders'
+  //   },
+  //   xAxis: {
+  //     categories: makeFinalDataBuy.strikes
+  //   },
+  //   colors: [
 
-      '#f23645',
-      '#089981',
-      '#0b5394'
-    ],
-    credits: {
-      enabled: false
-    },
-    plotOptions: {
-      column: {
-        borderRadius: '25%',
-        // stacking: 'normal'
-      }
-    },
-    series: makeFinalDataBuy.series
-  });
+  //     '#f23645',
+  //     '#089981',
+  //     '#0b5394'
+  //   ],
+  //   credits: {
+  //     enabled: false
+  //   },
+  //   plotOptions: {
+  //     column: {
+  //       borderRadius: '25%',
+  //       // stacking: 'normal'
+  //     }
+  //   },
+  //   series: makeFinalDataBuy.series
+  // });
 
-  Highcharts.chart('container6', {
-    chart: {
-      type: 'column'
-    },
-    title: {
-      text: 'PE Buy Sell Orders'
-    },
-    xAxis: {
-      categories: makeFinalDataSell.strikes
-    },
-    colors: [
-      '#089981',
-      '#f23645',
-      '#0b5394'
-    ],
-    credits: {
-      enabled: false
-    },
-    plotOptions: {
-      column: {
-        borderRadius: '25%',
-        // stacking: 'normal'
-      }
-    },
-    series: makeFinalDataSell.series
-  });
+  // Highcharts.chart('container6', {
+  //   chart: {
+  //     type: 'column'
+  //   },
+  //   title: {
+  //     text: 'PE Buy Sell Orders'
+  //   },
+  //   xAxis: {
+  //     categories: makeFinalDataSell.strikes
+  //   },
+  //   colors: [
+  //     '#089981',
+  //     '#f23645',
+  //     '#0b5394'
+  //   ],
+  //   credits: {
+  //     enabled: false
+  //   },
+  //   plotOptions: {
+  //     column: {
+  //       borderRadius: '25%',
+  //       // stacking: 'normal'
+  //     }
+  //   },
+  //   series: makeFinalDataSell.series
+  // });
 
 
 }
