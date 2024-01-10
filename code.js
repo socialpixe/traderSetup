@@ -619,7 +619,7 @@ function callNseApi(result) {
     'strikes': strikeValues,
     'series': [{
       name: 'PE Volumes + OI',
-      data: totalCeVolCeOi
+      data: totalPeVolPeOi
     }, {
       name: 'CE Volumes + OI',
       data: totalCeVolCeOi
