@@ -480,6 +480,30 @@ function callNseApi(result) {
     }, {
       name: 'CE OI',
       data: ceOIChangeValues
+    },
+    {
+      type: 'spline',
+      step: 'center',
+      name: 'PE Volume',
+      data: peVol,
+      marker: {
+        lineWidth: 2,
+        lineColor: Highcharts.getOptions().colors[3],
+        fillColor: 'white'
+      }
+    }
+      ,
+
+    {
+      type: 'spline',
+      step: 'center',
+      name: 'CE Volume',
+      data: ceVol,
+      marker: {
+        lineWidth: 2,
+        lineColor: Highcharts.getOptions().colors[3],
+        fillColor: 'white'
+      }
     }
 
     ]
@@ -494,7 +518,33 @@ function callNseApi(result) {
     }, {
       name: 'CE',
       data: ceOIValues
-    }]
+    },
+
+    {
+      type: 'spline',
+      step: 'center',
+      name: 'PE Volume',
+      data: peVol,
+      marker: {
+        lineWidth: 2,
+        lineColor: Highcharts.getOptions().colors[3],
+        fillColor: 'white'
+      }
+    }
+      ,
+
+    {
+      type: 'spline',
+      step: 'center',
+      name: 'CE Volume',
+      data: ceVol,
+      marker: {
+        lineWidth: 2,
+        lineColor: Highcharts.getOptions().colors[3],
+        fillColor: 'white'
+      }
+    }
+    ]
   };
   //peVol
   let makeFinalDataSell = {
