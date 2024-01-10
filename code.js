@@ -58,7 +58,7 @@ function pullFearAndGreed() {
 
 }
 
-function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell, marketMovers, marketLoosers, totalCeVol, totalPeVol, makeVolumesGraph) {
+function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell, marketMovers, marketLoosers, totalCeVol, totalPeVol, makeVolumesGraph, totalCeVolCeOi, totalPeVolPeOi) {
   Highcharts.chart('container', {
     chart: {
       type: 'column'
@@ -330,6 +330,51 @@ function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE,
   //   ]
   // });
 
+  Highcharts.chart('container8', {
+    chart: {
+      type: 'column'
+    },
+    title: {
+      text: 'OI + Volume Strikes',
+    },
+    credits: {
+      enabled: false
+    },
+    xAxis: {
+      categories: newStrikeVals,
+      accessibility: {
+        description: 'OI + Volume'
+      }
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: 'Values'
+      }
+    },
+    tooltip: {
+      valueSuffix: ' '
+    },
+    plotOptions: {
+      column: {
+        borderRadius: '25%'
+      }
+    },
+    series: [
+      {
+        name: 'PE OI + Volume',
+        colorByPoint: true,
+        data: totalPeVolPeOi
+      },
+      {
+        name: 'CE OI + Volume',
+        colorByPoint: true,
+        data: totalCeVolCeOi
+      },
+
+    ]
+  });
+
 
   // Highcharts.chart('container5', {
   //   chart: {
@@ -441,6 +486,8 @@ function callNseApi(result) {
   let totalPeVol = 0;
   let marketMovers = 0;
   let marketLoosers = 0;
+  let totalCeVolCeOi = 0;
+  let totalPeVolPeOi = 0;
 
   for (let index = lastEightStrike; index <= getNextEightStrike; index++) {
 
@@ -469,7 +516,8 @@ function callNseApi(result) {
     totalCE += completeData[index].CE.openInterest;
 
 
-
+    totalCeVolCeOi += totalCeVol + totalCE;
+    totalPeVolPeOi += totalPeVol + totalPE;
 
 
 
@@ -575,7 +623,7 @@ function callNseApi(result) {
     ]
   };
 
-  initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell, marketMovers, marketLoosers, totalCeVol, totalPeVol, makeVolumesGraph);
+  initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell, marketMovers, marketLoosers, totalCeVol, totalPeVol, makeVolumesGraph, totalCeVolCeOi, totalPeVolPeOi);
   findSupportAndResistance(peOIValues, ceOIValues, strikeValues, currentUnderlyingValue);
   $('#underLye').text(currentUnderlyingValue);
 
