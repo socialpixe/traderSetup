@@ -12,7 +12,7 @@ $(document).ready(function () {
   $('#timer').text(timerVal);
   setInterval(() => {
     window.location.reload(1);
-  }, 300000);
+  }, 200000);
 
 
 
@@ -516,6 +516,7 @@ function callNseApi(result) {
   }
 
   let makeFinalDataOIChange = {
+    'timeStamp': moment().unix(),
     'strikes': strikeValues,
     'series': [{
       name: 'PE OI',
@@ -603,6 +604,7 @@ function callNseApi(result) {
   };
 
   let makeVolumesGraph = {
+    'timeStamp': moment().unix(),
     'strikes': strikeValues,
     'series': [{
       name: 'PE Volume',
@@ -629,6 +631,9 @@ function callNseApi(result) {
   initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell, marketMovers, marketLoosers, totalCeVol, totalPeVol, makeVolumesGraph, makeFinalDataOIAndvolsum);
   findSupportAndResistance(totalPeVolPeOi, totalCeVolCeOi, strikeValues, currentUnderlyingValue);
   $('#underLye').text(currentUnderlyingValue);
+
+  saveVolOiData('changeOiJson', makeFinalDataOIChange);
+  saveVolOiData('volumeJson', makeVolumesGraph);
 
 
 }
@@ -757,3 +762,69 @@ function copytable(el) {
   window.getSelection().addRange(range)
   document.execCommand('copy')
 }
+
+
+function saveVolOiData(localStorageItemName, objData) {
+
+  let timerVal = new Date().toLocaleString();
+
+  if (localStorage.getItem(localStorageItemName) !== null) {
+
+    var retrievedObject = localStorage.getItem(localStorageItemName);
+    let parseObj = JSON.parse(retrievedObject);
+
+    parseObj.push(objData);
+
+    localStorage.setItem(localStorageItemName, JSON.stringify(parseObj));
+
+    var retrievedObject = localStorage.getItem(localStorageItemName);
+
+    console.log('retrievedObjectobjData: ', JSON.parse(retrievedObject));
+
+  }
+  else {
+
+    let newObj = [];
+
+    let createData = objData;
+
+    newObj.push(createData);
+
+    localStorage.setItem(localStorageItemName, JSON.stringify(newObj));
+
+    var retrievedObject = localStorage.getItem(localStorageItemName);
+
+    console.log('retrievedObjectobjData: ', JSON.parse(retrievedObject));
+
+
+  }
+
+}
+
+//console.log(moment().unix());
+//console.log(moment.unix(1704875926).format("YYYY MM DD"));
+
+let nextObj_beData = [
+  {
+    'timeFrame': 5554646545,
+    'strikes': strikeValues,
+    'series': [{
+      name: 'PE Volumes + OI',
+      data: totalPeVolPeOi
+    }, {
+      name: 'CE Volumes + OI',
+      data: totalCeVolCeOi
+    }]
+  },
+  {
+    'timeFrame': 5554646545,
+    'strikes': strikeValues,
+    'series': [{
+      name: 'PE Volumes + OI',
+      data: totalPeVolPeOi
+    }, {
+      name: 'CE Volumes + OI',
+      data: totalCeVolCeOi
+    }]
+  }
+];
