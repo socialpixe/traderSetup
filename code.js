@@ -672,7 +672,7 @@ function findSupportAndResistance(peOIChangeValues, ceOIChangeValues, strikeValu
   $('#_supportValue').html(strikeValues[getPeOiVolIndex] + " OI + Vol <br>" + strikeValues[getPeOiChangeIndex] + " OI Change");
   $('#_resistanceValue').html(strikeValues[getCeOiVolIndex] + " OI + Vol <br>" + strikeValues[getCeOiChangeIndex] + " OI Change");
 
-  saveDataToLocalStorage(strikeValues[getPeOiVolIndex] + " OI + Vol | " + strikeValues[getPeOiChangeIndex] + " OI Change", strikeValues[getCeOiVolIndex] + " OI + Vol <br>" + strikeValues[getCeOiChangeIndex] + " OI Change");
+  saveDataToLocalStorage(strikeValues[getPeOiVolIndex] + " OI + Vol | " + strikeValues[getPeOiChangeIndex] + " OI Change", strikeValues[getCeOiVolIndex] + " OI + Vol | " + strikeValues[getCeOiChangeIndex] + " OI Change");
 
 
 
