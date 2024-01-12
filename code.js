@@ -629,7 +629,7 @@ function callNseApi(result) {
   };
 
   initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell, marketMovers, marketLoosers, totalCeVol, totalPeVol, makeVolumesGraph, makeFinalDataOIAndvolsum);
-  findSupportAndResistance(totalPeVolPeOi, totalCeVolCeOi, strikeValues, currentUnderlyingValue);
+  findSupportAndResistance(totalPeVolPeOi, totalCeVolCeOi, strikeValues, currentUnderlyingValue, peOIValues, ceOIValues);
   $('#underLye').text(currentUnderlyingValue);
 
   saveVolOiData('changeOiJson', makeFinalDataOIChange);
@@ -639,17 +639,24 @@ function callNseApi(result) {
 }
 
 
-function findSupportAndResistance(peOIChangeValues, ceOIChangeValues, strikeValues, currentUnderlyingValue) {
+function findSupportAndResistance(peOIChangeValues, ceOIChangeValues, strikeValues, currentUnderlyingValue, peOIValues, ceOIValues) {
 
 
-  let getPeMax = Math.max(...peOIChangeValues);
-  let getCeMax = Math.max(...ceOIChangeValues);
+  let getPeOiVolMax = Math.max(...peOIChangeValues);
+  let getCeOiVolMax = Math.max(...ceOIChangeValues);
 
-  let getPeIndex = peOIChangeValues.indexOf(getPeMax);
-  let getCeIndex = ceOIChangeValues.indexOf(getCeMax);
+  let getPeOiVolIndex = peOIChangeValues.indexOf(getPeOiVolMax);
+  let getCeOiVolIndex = ceOIChangeValues.indexOf(getCeOiVolMax);
 
-  // let checkActionForSupport = parseInt(currentUnderlyingValue) - parseInt(strikeValues[getPeIndex]);
-  // let checkActionForResistance = parseInt(strikeValues[getCeIndex]) - parseInt(currentUnderlyingValue);
+
+  let getPeOiChangeMax = Math.max(...peOIValues);
+  let getCeOiChangeMax = Math.max(...ceOIValues);
+
+  let getPeOiChangeIndex = peOIChangeValues.indexOf(getPeOiChangeMax);
+  let getCeOiChangeIndex = ceOIChangeValues.indexOf(getCeOiChangeMax);
+
+  // let checkActionForSupport = parseInt(currentUnderlyingValue) - parseInt(strikeValues[getPeOiVolIndex]);
+  // let checkActionForResistance = parseInt(strikeValues[getCeOiVolIndex]) - parseInt(currentUnderlyingValue);
 
   // if (checkActionForSupport > checkActionForResistance) {
   //   $('#_actionValue').text('SELL');
@@ -662,10 +669,10 @@ function findSupportAndResistance(peOIChangeValues, ceOIChangeValues, strikeValu
   // }
 
 
-  $('#_supportValue').text(strikeValues[getPeIndex]);
-  $('#_resistanceValue').text(strikeValues[getCeIndex]);
+  $('#_supportValue').html(strikeValues[getPeOiVolIndex] + " OI + Vol <br>" + strikeValues[getPeOiChangeIndex] + " OI Change");
+  $('#_resistanceValue').html(strikeValues[getCeOiVolIndex] + " OI + Vol <br>" + strikeValues[getCeOiChangeIndex] + " OI Change");
 
-  saveDataToLocalStorage(strikeValues[getPeIndex], strikeValues[getCeIndex]);
+  saveDataToLocalStorage(strikeValues[getPeOiVolIndex] + " OI + Vol | " + strikeValues[getPeOiChangeIndex] + " OI Change", strikeValues[getCeOiVolIndex] + " OI + Vol <br>" + strikeValues[getCeOiChangeIndex] + " OI Change");
 
 
 
