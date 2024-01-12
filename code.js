@@ -652,8 +652,8 @@ function findSupportAndResistance(peOIChangeValues, ceOIChangeValues, strikeValu
   let getPeOiChangeMax = Math.max(...peOIValues);
   let getCeOiChangeMax = Math.max(...ceOIValues);
 
-  let getPeOiChangeIndex = peOIChangeValues.indexOf(getPeOiChangeMax);
-  let getCeOiChangeIndex = ceOIChangeValues.indexOf(getCeOiChangeMax);
+  let getPeOiChangeIndex = peOIValues.indexOf(getPeOiChangeMax);
+  let getCeOiChangeIndex = ceOIValues.indexOf(getCeOiChangeMax);
 
   // let checkActionForSupport = parseInt(currentUnderlyingValue) - parseInt(strikeValues[getPeOiVolIndex]);
   // let checkActionForResistance = parseInt(strikeValues[getCeOiVolIndex]) - parseInt(currentUnderlyingValue);
