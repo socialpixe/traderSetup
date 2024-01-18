@@ -14,7 +14,6 @@ $(document).ready(function () {
     window.location.reload(1);
   }, 200000);
   //bseDataPuller();
-  oiAllOverDataPuller();
 
 
 
