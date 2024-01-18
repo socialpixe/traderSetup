@@ -13,6 +13,7 @@ $(document).ready(function () {
   setInterval(() => {
     window.location.reload(1);
   }, 200000);
+  bseDataPuller();
 
 
 
@@ -835,3 +836,23 @@ let nextObj_beData = [
     }]
   }
 ];
+
+function bseDataPuller() {
+  var settings = {
+    "url": "https://api.bseindia.com/BseIndiaAPI/api/DerivOptionChain_IV/w?Expiry=19+Jan+2024&scrip_cd=1&strprice=0",
+    "method": "GET",
+    "timeout": 0,
+    "headers": {
+      "Origin": "https://www.bseindia.com",
+      "Referer": "https://www.bseindia.com/",
+      "Sec-Fetch-Dest": "empty",
+      "Sec-Fetch-Mode": "cors",
+      "Sec-Fetch-Site": "same-site",
+      "TE": "trailers"
+    },
+  };
+
+  $.ajax(settings).done(function (response) {
+    console.log(response);
+  });
+}
