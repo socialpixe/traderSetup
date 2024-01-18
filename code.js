@@ -14,6 +14,7 @@ $(document).ready(function () {
     window.location.reload(1);
   }, 200000);
   //bseDataPuller();
+  oiAllOverDataPuller();
 
 
 
@@ -856,3 +857,38 @@ let nextObj_beData = [
 //   console.log(response);
 // });
 // }
+
+function oiAllOverDataPuller() {
+  var form = new FormData();
+  form.append("symbol", "SENSEX");
+  form.append("snapShotDateTimeTicks", "638411815800000000");
+  form.append("fromDate", "11:00");
+  form.append("toDate", "13:30");
+  form.append("expDate", "19+Jan+2024");
+  form.append("changeInOI", "False");
+  form.append("oiSliderAutoRefresh", "false");
+
+  var settings = {
+    "url": "https://www.niftyoidata.com/oi/getoibydaterange",
+    "method": "POST",
+    "timeout": 0,
+    "headers": {
+      "Host": "www.niftyoidata.com",
+      "Origin": "https://www.niftyoidata.com",
+      "Referer": "https://www.niftyoidata.com/oi/totaloi?symbol=SENSEX",
+      "TE": "trailers",
+      "Sec-Fetch-Site": "same-origin",
+      "Sec-Fetch-Mode": "cors",
+      "Sec-Fetch-Dest": "empty",
+      "X-Requested-With": "XMLHttpRequest"
+    },
+    "processData": false,
+    "mimeType": "multipart/form-data",
+    "contentType": false,
+    "data": form
+  };
+
+  $.ajax(settings).done(function (response) {
+    console.log("oiAllOverDataPuller", response);
+  });
+}
