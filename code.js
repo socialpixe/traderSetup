@@ -59,7 +59,33 @@ function pullFearAndGreed() {
 
 }
 
-function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell, marketMovers, marketLoosers, totalCeVol, totalPeVol, makeVolumesGraph, makeFinalDataOIAndvolsum) {
+function initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell, marketMovers, marketLoosers, totalCeVol, totalPeVol, makeVolumesGraph, makeFinalDataOIAndvolsum, makeFinalDataSpotPriceIVData) {
+  Highcharts.chart('container_0_iv', {
+    chart: {
+      type: 'column'
+    },
+    title: {
+      text: 'OI Change'
+    },
+    xAxis: {
+      categories: makeFinalDataSpotPriceIVData.strikes
+    },
+    colors: [
+      '#089981',
+      '#f23645'
+    ],
+    credits: {
+      enabled: false
+    },
+    plotOptions: {
+      column: {
+        borderRadius: '25%',
+
+      }
+    },
+    series: makeFinalDataSpotPriceIVData.series
+  });
+
   Highcharts.chart('container', {
     chart: {
       type: 'column'
@@ -447,16 +473,19 @@ function callNseApi(result) {
   let lastEightStrike = 0;
   let getNextEightStrike = 0;
 
-  if (localStorage.getItem("selectedScrip") != 'BANKNIFTY') {
-    lastEightStrike = getIndexOfULV - 7;
-    getNextEightStrike = getIndexOfULV + 7;
+  // if (localStorage.getItem("selectedScrip") != 'BANKNIFTY') {
+  //   lastEightStrike = getIndexOfULV - 4;
+  //   getNextEightStrike = getIndexOfULV + 4;
 
-  }
-  else {
-    lastEightStrike = getIndexOfULV - 5;
-    getNextEightStrike = getIndexOfULV + 5;
+  // }
+  // else {
+  //   lastEightStrike = getIndexOfULV - 4;
+  //   getNextEightStrike = getIndexOfULV + 4;
 
-  }
+  // }
+
+  lastEightStrike = getIndexOfULV - 4;
+  getNextEightStrike = getIndexOfULV + 4;
 
 
 
@@ -481,6 +510,8 @@ function callNseApi(result) {
   let marketLoosers = 0;
   let totalCeVolCeOi = [];
   let totalPeVolPeOi = [];
+  let peIV = [];
+  let ceIV = [];
 
   for (let index = lastEightStrike; index <= getNextEightStrike; index++) {
 
@@ -489,6 +520,10 @@ function callNseApi(result) {
     peOIChangeValues.push(completeData[index].PE.changeinOpenInterest);
     ceOIValues.push(completeData[index].CE.openInterest);
     ceOIChangeValues.push(completeData[index].CE.openInterest);
+
+    peIV.push(completeData[index].PE.impliedVolatility);
+    ceIV.push(completeData[index].CE.impliedVolatility);
+
     combinedPeCe.push({ name: completeData[index].PE.strikePrice + "PE", y: completeData[index].PE.openInterest }, { name: completeData[index].CE.strikePrice + "CE", y: completeData[index].CE.openInterest });
     peBuy.push(completeData[index].PE.totalBuyQuantity);
     peSell.push(completeData[index].PE.totalSellQuantity);
@@ -530,6 +565,25 @@ function callNseApi(result) {
     ]
 
   };
+
+  //IvDta
+
+  let makeFinalDataSpotPriceIVData = {
+    'timeStamp': moment().unix(),
+    'strikes': strikeValues,
+    'series': [{
+      name: 'PE IV',
+      data: peIV
+    }, {
+      name: 'CE IV',
+      data: ceIV
+    },
+
+    ]
+
+  };
+
+
 
   let makeFinalDataOI = {
     'strikes': strikeValues,
@@ -629,7 +683,7 @@ function callNseApi(result) {
     }]
   };
 
-  initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell, marketMovers, marketLoosers, totalCeVol, totalPeVol, makeVolumesGraph, makeFinalDataOIAndvolsum);
+  initiateGraph(makeFinalDataOIChange, makeFinalDataOI, totalPE, totalCE, combinedPeCe, makeFinalDataBuy, makeFinalDataSell, marketMovers, marketLoosers, totalCeVol, totalPeVol, makeVolumesGraph, makeFinalDataOIAndvolsum, makeFinalDataSpotPriceIVData);
   findSupportAndResistance(totalPeVolPeOi, totalCeVolCeOi, strikeValues, currentUnderlyingValue, peOIValues, ceOIValues);
   $('#underLye').text(currentUnderlyingValue);
 
